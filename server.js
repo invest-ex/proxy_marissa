@@ -19,6 +19,10 @@ const axios3003 = axios.create({
   baseURL: 'http://localhost:3003',
 });
 
+const axios4000 = axios.create({
+  baseURL: 'http://localhost:4000',
+});
+
 app.use('/api/ratings/:ticker', (req, res) => {
   axios3001.get(`/api/ratings/${req.params.ticker}`)
     .then(response => res.send(response.data))
@@ -49,10 +53,22 @@ app.use('/api/quotes/:symbol', (req, res) => {
     .catch(err => res.send(err));
 })
 
-app.use('/stocks/tags/:tag', (req, res) => {
-  axios3003.get(`/stocks/tags/${req.params.tag}`)
+// app.use('/stocks/tags/:tag', (req, res) => {
+//   axios3003.get(`/stocks/tags/${req.params.tag}`)
+//     .then(response => res.send(response.data))
+//     .catch(err => res.send(err));
+// })
+
+app.use('/api/:stockId', (req, res) => {
+  axios4000.get(`/api/${req.params.stockId}`)
     .then(response => res.send(response.data))
     .catch(err => res.send(err));
+})
+
+app.get('/:stockId', (req, res) => {
+  axios4000.get(`/api/${req.params.stockId}`)
+  .then(response => res.send(response.data))
+  .catch(err => res.send(err));
 })
 
 app.listen(port, () => {
