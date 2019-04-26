@@ -1,3 +1,4 @@
+// require('newrelic');
 const express = require('express');
 const path = require('path');
 const axios = require('axios');
@@ -47,8 +48,38 @@ app.use('/api/accounts/:account_number', (req, res) => {
     .catch(err => res.send(err));
 })
 
-app.use('/api/quotes/:symbol', (req, res) => {
-  axios3003.get(`/api/quotes/${req.params.symbol}`)
+app.get('/api/about/:symbol', (req, res) => {
+  axios3003.get(`/api/about/${req.params.symbol}`)
+    .then(response => res.send(response.data))
+    .catch(err => res.send(err));
+})
+
+app.delete('/api/about/:symbol', (req, res) => {
+  axios3003.delete(`/api/about/${req.params.symbol}`)
+    .then(count => res.send(count))
+    .catch(err => res.send(err));
+})
+
+app.post('/api/about/', (req, res) => {
+  axios3003.post(`/api/about/`)
+    .then(response => res.send(response.data))
+    .catch(err => res.send(err));
+})
+
+app.get('/api/users/:userId', (req, res) => {
+  axios3003.get(`/api/users/${req.params.userId}`)
+    .then(response => res.send(response.data))
+    .catch(err => res.send(err));
+})
+
+app.delete('/api/users/:userId', (req, res) => {
+  axios3003.delete(`/api/users/${req.params.userId}`)
+    .then(response => res.send(response.data))
+    .catch(err => res.send(err));
+})
+
+app.post('/api/users', (req, res) => {
+  axios3003.get(`/api/users`)
     .then(response => res.send(response.data))
     .catch(err => res.send(err));
 })
@@ -59,17 +90,17 @@ app.use('/api/quotes/:symbol', (req, res) => {
 //     .catch(err => res.send(err));
 // })
 
-app.use('/api/:stockId', (req, res) => {
-  axios4000.get(`/api/${req.params.stockId}`)
-    .then(response => res.send(response.data))
-    .catch(err => res.send(err));
-})
+// app.use('/api/:stockId', (req, res) => {
+//   axios4000.get(`/api/${req.params.stockId}`)
+//     .then(response => res.send(response.data))
+//     .catch(err => res.send(err));
+// })
 
-app.get('/:stockId', (req, res) => {
-  axios4000.get(`/api/${req.params.stockId}`)
-  .then(response => res.send(response.data))
-  .catch(err => res.send(err));
-})
+// app.get('/:stockId', (req, res) => {
+//   axios4000.get(`/api/${req.params.stockId}`)
+//   .then(response => res.send(response.data))
+//   .catch(err => res.send(err));
+// })
 
 app.listen(port, () => {
   console.log(`proxy server running at: http://localhost:${port}`);
